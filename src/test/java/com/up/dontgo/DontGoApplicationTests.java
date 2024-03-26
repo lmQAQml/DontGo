@@ -37,4 +37,27 @@ public class DontGoApplicationTests {
         userList.forEach(System.out::println);
     }
 
+    /**
+     * 根据某级向下查询地区信息(包括自己)
+     */
+    @Test
+    public void testRegionMapperDownList() {
+        System.out.println(("----- 查询节点向下所有信息 ------"));
+        // 511600 广安市
+        List<RegionEntity> userList = regionMapper.downList("511600", true);
+        Assert.notNull(userList, "没有数据");
+        userList.forEach(System.out::println);
+    }
+
+    /**
+     * 根据某级向上查询地区信息(包括自己)
+     */
+    @Test
+    public void testRegionMapperUpList() {
+        System.out.println(("----- 查询节点向上所有信息 ------"));
+        // 511602 广安区
+        List<RegionEntity> userList = regionMapper.upList("511602", false);
+        Assert.notNull(userList, "没有数据");
+        userList.forEach(System.out::println);
+    }
 }
