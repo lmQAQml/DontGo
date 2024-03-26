@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: DontGo
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/dontgo?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
