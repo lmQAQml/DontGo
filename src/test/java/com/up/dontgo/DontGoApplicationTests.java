@@ -11,6 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 import java.util.List;
 
+/**
+ * springboot2.5之前的版本，类DontGoApplicationTests和类内方法应指定为public
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DontGoApplicationTests {
