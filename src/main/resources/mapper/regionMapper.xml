@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.up.dontgo.mapper.RegionMapper">
+
+    <select id="downList" parameterType="string" resultType="com.up.dontgo.entity.RegionEntity">
+        WITH RECURSIVE recursion ( region_id, region_name, region_code,region_parent_id, region_level ) AS (
+            SELECT
+                t1.region_id,
+                t1.region_name,
+                t1.region_code,
+                t1.region_parent_id,
+                t1.region_level
+            FROM
+                sys_region t1
+            WHERE
+                t1.region_code = #{code}
+
+            UNION ALL
+
+            SELECT
+                t2.region_id,
+                t2.region_name,
+                t2.region_code,
+                t2.region_parent_id,
+                t2.region_level
+            FROM
+                sys_region t2,
+                recursion t3
+            WHERE
+                t2.region_parent_id = t3.region_id
+        ) SELECT
+              t.region_id,
+              t.region_name,
+              t.region_code,
+              t.region_parent_id,
+              t.region_level
+        FROM
+            recursion t
+        <if test="!flag">
+            where t.region_code != #{code}
+        </if>
+
+    </select>
+
+    <select id="upList" resultType="com.up.dontgo.entity.RegionEntity">
+        WITH RECURSIVE recursion ( region_id, region_name, region_code,region_parent_id, region_level ) AS (
+            SELECT
+                t1.region_id,
+                t1.region_name,
+                t1.region_code,
+                t1.region_parent_id,
+                t1.region_level
+            FROM
+                sys_region t1
+            WHERE
+                t1.region_code = #{code}
+
+            UNION ALL
+
+            SELECT
+                t2.region_id,
+                t2.region_name,
+                t2.region_code,
+                t2.region_parent_id,
+                t2.region_level
+            FROM
+                sys_region t2,
+                recursion t3
+            WHERE
+                t3.region_parent_id = t2.region_id
+        ) SELECT
+              t.region_id,
+              t.region_name,
+              t.region_code,
+              t.region_parent_id,
+              t.region_level
+        FROM
+            recursion t
+        <if test="!flag">
+            where t.region_code != #{code}
+        </if>
+    </select>
+
+</mapper>
